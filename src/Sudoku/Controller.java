@@ -126,16 +126,20 @@ public class Controller implements Initializable {
         }
     }
 
-    //clears the board
+    //clears the board action
     public void ClearBoard(ActionEvent actionEvent) {
+            ResetBoard();
+    }
+
+
+    //resets the board
+    private void ResetBoard() {
         for (int r = 0; r < puzzleBoxes.length; r++) {
             for (int c = 0; c < puzzleBoxes[r].length; c++) {
                 puzzleBoxes[r][c].setText(" ");
                 puzzle[r][c] = 0;
             }
         }
-
-
     }
 
 
@@ -149,6 +153,8 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
 
         puzzleBoxes[0][0] = ZeroZero;
         puzzleBoxes[0][1] = ZeroOne;
@@ -243,6 +249,7 @@ public class Controller implements Initializable {
 //            {ZeroEight, OneEight , TwoEight, ThreeEight, FourEight, FiveEight, SixEight, SevenEight, EightEight } };
 
 
+        ResetBoard();
 
 
         // force the field to be numeric only && only have one value
