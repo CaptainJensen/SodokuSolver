@@ -1,4 +1,4 @@
-package Sodoku;
+package Sudoku;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -6,8 +6,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
@@ -1794,6 +1792,6 @@ public class Controller implements Initializable {
 
 
 
-    
+
 
 }

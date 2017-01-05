@@ -1,11 +1,8 @@
-package Sodoku;
+package Sudoku;
 
 /**
  * Created by Jensen on 1/4/17.
  */
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class SudokuSolver {
 

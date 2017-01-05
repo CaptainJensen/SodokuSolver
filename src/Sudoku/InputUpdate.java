@@ -1,4 +1,4 @@
-package Sodoku;
+package Sudoku;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
