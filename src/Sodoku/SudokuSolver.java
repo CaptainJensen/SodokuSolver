@@ -9,19 +9,26 @@ import java.util.Scanner;
 
 public class SudokuSolver {
 
+
+
+
     private int[][] numbers;
 
 
     //constructor
-    public SudokuSolver(String filePath) throws FileNotFoundException {
-        numbers =  new int[9][9];
+    public SudokuSolver(int[][] values) {
+        numbers = values;
+
+
+
+//        numbers =  new int[9][9];
         //int[][] vals = new int[9][9];
-        Scanner read = new Scanner(new File(filePath));
-        for (int r = 0; r < numbers.length; r++) {
-            for (int c = 0; c < numbers[r].length; c++) {
-                numbers[r][c] = read.nextInt();
-            }
-        }
+//        Scanner read = new Scanner(new File(filePath));
+//        for (int r = 0; r < numbers.length; r++) {
+//            for (int c = 0; c < numbers[r].length; c++) {
+//                numbers[r][c] = read.nextInt();
+//            }
+//        }
 
     }
 
@@ -123,5 +130,12 @@ public class SudokuSolver {
         }
         return false;
     }
+
+
+
+    public int[][] getNumbers() {
+        return numbers;
+    }
+
 }
 
