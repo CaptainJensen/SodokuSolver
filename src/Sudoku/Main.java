@@ -5,8 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
 
 public class Main extends Application {
 
@@ -26,14 +24,14 @@ public class Main extends Application {
 
 
     @Override
+    public void init() {
+        System.out.println("Init");
+    }
+
+    @Override
     public void stop() {
         System.out.println("Stage is closing");
-        try {
-            GlobalScreen.unregisterNativeHook();
-            System.out.println("Unregistered Native Hook");
-        } catch (NativeHookException e) {
-            e.printStackTrace();
-        }
+
     }
 
 }
