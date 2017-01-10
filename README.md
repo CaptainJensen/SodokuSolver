@@ -1,7 +1,7 @@
 # SudokuSolver
 Solves Sudoku Puzzles and much more!
 
-Latest Release - 2017.1.0
+Latest Release - v2017.1.5
 
 Download Here: https://github.com/CaptainJensen/SudokuSolver/releases
 
