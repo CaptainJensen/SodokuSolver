@@ -122,49 +122,22 @@ public class Controller implements Initializable {
 
         System.out.println("Solve Button Pressed");
 
-        if (!checkPossibleboard()) {
-            System.out.println("Here");
+        BoardChecker boardChecker = new BoardChecker(puzzle);
+        if (!boardChecker.isBoardPossible()) {
+            System.out.println("Not Possible Value");
+            setNotPossibleValue(true);
 
-            flag = true;
+        } else {
 
             SudokuSolver solver = new SudokuSolver(puzzle);
             solver.showPuzzle();
-
             solver.solve(0,0);
             puzzle = solver.getNumbers();
             setBoardValues();
             MemoryUsage.printMemoryUsage();
-
-
-        } else {
-            System.out.println("Not Possible Value");
-            setNotPossibleValue(true);
         }
 
 
-
-
-
-
-
-    }
-
-
-    boolean flag = true;
-    public boolean checkPossibleboard() {
-        BoardChecker boardChecker = new BoardChecker(puzzle);
-
-        for (int r = 0; r < puzzle.length; r++) {
-            for (int c = 0; c < puzzle[r].length && flag; c++) {
-                if(!boardChecker.isPossibleDigit(puzzle[r][c],r,c)) {
-                    //will return true for first value if true (not if all values)
-                    flag = false;
-                    return false;
-
-                }
-            }
-        }
-        return true;
     }
 
     //sets values in the board
@@ -317,7 +290,7 @@ public class Controller implements Initializable {
                             //puzzleBoxes[r][c].textProperty().addListener(this);
                         }
                         else if (newValue.equals("")) {
-                            //puzzle[r][c] = 0;
+                            puzzle[r][c] = 0;
                             System.out.println("Empty");
                             setNotPossibleValue(false);
                         }

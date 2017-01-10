@@ -13,43 +13,57 @@ public class BoardChecker {
 
     }
 
-//    //checks every value in the board
-//    public boolean isBoardPossible() {
-//        for (int r = 0; r < board.length; r++) {
-//            for (int c = 0; c < board[r].length; c++) {
-//                if(isPossibleDigit(board[r][c], r, c) && board[r][c] != 0) {
-//                                        //add ! here if needed
-//                    System.out.println();
-//                    System.out.println("Location of error: r=" + r +" c=" + c);
-//                    System.out.println("Error Number: " + board[r][c]);
-//                    System.out.println();
-//                    return false;
-//                }
-//            }
-//        }
-//        return true;
-//    }
+    //checks every value in the board
+    public boolean isBoardPossible() {
+        if (board == null) return false;
+
+        // check each colmn
+        for (int i = 0; i < 9; i++) {
+            boolean[] m = new boolean[9];
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] != 0) {
+                    if (m[(board[i][j] - 1)]) {
+                        return false;
+                    }
+                    m[(board[i][j] - 1)] = true;
+                }
+            }
+        }
+
+        //check each row
+        for (int j = 0; j < 9; j++) {
+            boolean[] m = new boolean[9];
+            for (int i = 0; i < 9; i++) {
+                if (board[i][j] != 0) {
+                    if (m[(board[i][j] - 1)]) {
+                        return false;
+                    }
+                    m[(board[i][j] - 1)] = true;
+                }
+            }
+        }
+
+        //check each square
+        for (int square = 0; square < 9; square++) {
+            boolean[] x = new boolean[9];
+            for (int r = square / 3 * 3; r < square / 3 * 3 + 3; r++) {
+                for (int c = square % 3 * 3; c < square % 3 * 3 + 3; c++) {
+                    if (board[r][c] != 0) {
+                        if (x[(board[r][c] - 1)]) {
+                            return false;
+                        }
+                        x[(board[r][c] - 1)] = true;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
 
 
     //checks to see if value is possible in puzzle
     public boolean isPossibleDigit(int i, int row, int col) {
-//        if(isInRow(i,row)) {
-//            System.out.println(i+  " is in row");
-//            return false;
-//        }
-//        else if(isInColumn(i,col)) {
-//            System.out.println(i+  " is in column");
-//            return false;
-//        }
-//        else if(isInSquare(i,row,col)) {
-//            System.out.println(i+  " is in square");
-//            return false;
-//        }
-//        return true;
-
-        //return !isInRow(i,row) && !isInColumn(i,col) && !isInSquare(i,row,col);
-
-
         return !isInRow(i, row) && !isInColumn(i, col) && !isInSquare(i, row, col);
     }
 
