@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import org.Jensen.Toolbox.Tools.Data.MemoryUsage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,7 +18,7 @@ public class Controller implements Initializable {
     private static TextField[][] puzzleBoxes = new TextField[9][9];
     private static int[][] puzzle;
 
-    MemoryUsage memoryUsage = new MemoryUsage();
+    //MemoryUsage memoryUsage = new MemoryUsage();
 
     public GridPane gridPane;
     public Button solveButton;
@@ -134,7 +133,7 @@ public class Controller implements Initializable {
             solver.solve(0,0);
             puzzle = solver.getNumbers();
             setBoardValues();
-            MemoryUsage.printMemoryUsage();
+            //MemoryUsage.printMemoryUsage();
         }
 
 
@@ -267,7 +266,6 @@ public class Controller implements Initializable {
         puzzleBoxes[8][8] = EightEight ;
 
         ResetBoard();
-
         for (int i = 0; i < puzzleBoxes.length; i++) {
             for (int j = 0; j < puzzleBoxes[i].length; j++) {
 
