@@ -13,10 +13,44 @@ public class BoardChecker {
 
     }
 
+//    //checks every value in the board
+//    public boolean isBoardPossible() {
+//        for (int r = 0; r < board.length; r++) {
+//            for (int c = 0; c < board[r].length; c++) {
+//                if(isPossibleDigit(board[r][c], r, c) && board[r][c] != 0) {
+//                                        //add ! here if needed
+//                    System.out.println();
+//                    System.out.println("Location of error: r=" + r +" c=" + c);
+//                    System.out.println("Error Number: " + board[r][c]);
+//                    System.out.println();
+//                    return false;
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
 
     //checks to see if value is possible in puzzle
     public boolean isPossibleDigit(int i, int row, int col) {
-        return !isInRow(i,row) && !isInColumn(i,col) && !isInSquare(i,row,col);
+//        if(isInRow(i,row)) {
+//            System.out.println(i+  " is in row");
+//            return false;
+//        }
+//        else if(isInColumn(i,col)) {
+//            System.out.println(i+  " is in column");
+//            return false;
+//        }
+//        else if(isInSquare(i,row,col)) {
+//            System.out.println(i+  " is in square");
+//            return false;
+//        }
+//        return true;
+
+        //return !isInRow(i,row) && !isInColumn(i,col) && !isInSquare(i,row,col);
+
+
+        return !isInRow(i, row) && !isInColumn(i, col) && !isInSquare(i, row, col);
     }
 
     //checks if value is allowed in square
@@ -72,5 +106,10 @@ public class BoardChecker {
             }
         }
         return false;
+    }
+
+
+    public void setBoard(int[][] board) {
+        this.board = board;
     }
 }

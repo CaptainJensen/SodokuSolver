@@ -80,7 +80,7 @@ public class SudokuSolver {
     }
 
 
-    //checks if value is allowed in quare?
+    //return true if i is in square
     private boolean isInSquare(int k, int[][] square) {
         for (int r = 0; r < square.length; r++) {
             for (int c = 0; c < square[r].length; c++) {
@@ -91,7 +91,7 @@ public class SudokuSolver {
     }
 
 
-    //used to get the square for in square
+    //builds the square
     private int[][] getSquare(int row, int col) {
         int[][] square = new int[3][3];
 
@@ -107,7 +107,7 @@ public class SudokuSolver {
         return square;
     }
 
-    //checks if in column
+    //return true if i is in column
     private boolean isInColumn(int i, int col) {
         for (int r = 0; r < numbers.length; r++) {
             if(i == numbers[r][col]) {
@@ -119,6 +119,7 @@ public class SudokuSolver {
 
 
     //checks if in row from value
+    //return true if i is in row
     private boolean isInRow(int i, int row) {
         for (int c = 0; c < numbers[row].length; c++) {
             if(i == numbers[row][c]) {

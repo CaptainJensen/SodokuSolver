@@ -7,12 +7,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import org.Jensen.Toolbox.Tools.Data.MemoryUsage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
+
+
 public class Controller implements Initializable {
 
+    private static TextField[][] puzzleBoxes = new TextField[9][9];
+    private static int[][] puzzle;
+
+    MemoryUsage memoryUsage = new MemoryUsage();
 
     public GridPane gridPane;
     public Button solveButton;
@@ -99,28 +106,65 @@ public class Controller implements Initializable {
     public TextField OneTwo;
     public TextField ZeroOne;
 
-    private static TextField[][] puzzleBoxes = new TextField[9][9];
-    private static int[][] puzzle = new int[9][9];
 
 
+
+    private void setNotPossibleValue(boolean value) {
+        if(value) {
+            solveButton.setDisable(true);
+        }
+        else {
+            solveButton.setDisable(false);
+        }
+    }
 
     public void solveAction(ActionEvent actionEvent) {
 
-        SudokuSolver solver = new SudokuSolver(puzzle);
-        solver.solve(0,0);
-        puzzle = solver.getNumbers();
-        setBoardValues();
-        reportMemoryUsage();
+        System.out.println("Solve Button Pressed");
+
+        if (!checkPossibleboard()) {
+            System.out.println("Here");
+
+            flag = true;
+
+            SudokuSolver solver = new SudokuSolver(puzzle);
+            solver.showPuzzle();
+
+            solver.solve(0,0);
+            puzzle = solver.getNumbers();
+            setBoardValues();
+            MemoryUsage.printMemoryUsage();
+
+
+        } else {
+            System.out.println("Not Possible Value");
+            setNotPossibleValue(true);
+        }
+
+
+
+
+
+
+
     }
 
 
-    private static void reportMemoryUsage() {
-        System.gc();
-        Runtime runtime = Runtime.getRuntime();
-        long used = runtime.totalMemory() - runtime.freeMemory();
-        double mb = 1024*1024;
-        System.out.printf("Used Memory after GC: %.2f MB", used / mb);
-        System.out.println();
+    boolean flag = true;
+    public boolean checkPossibleboard() {
+        BoardChecker boardChecker = new BoardChecker(puzzle);
+
+        for (int r = 0; r < puzzle.length; r++) {
+            for (int c = 0; c < puzzle[r].length && flag; c++) {
+                if(!boardChecker.isPossibleDigit(puzzle[r][c],r,c)) {
+                    //will return true for first value if true (not if all values)
+                    flag = false;
+                    return false;
+
+                }
+            }
+        }
+        return true;
     }
 
     //sets values in the board
@@ -132,9 +176,11 @@ public class Controller implements Initializable {
         }
     }
 
-    //clears the board action
+    //clears the board from Button action
     public void ClearBoard(ActionEvent actionEvent) {
-            ResetBoard();
+        System.out.println("Board Reset From Button");
+        setNotPossibleValue(false);
+        ResetBoard();
     }
 
 
@@ -143,7 +189,8 @@ public class Controller implements Initializable {
         for (int r = 0; r < puzzleBoxes.length; r++) {
             for (int c = 0; c < puzzleBoxes[r].length; c++) {
                 puzzleBoxes[r][c].setText("");
-                puzzle[r][c] = 0;
+                puzzle = new int[9][9];
+
             }
         }
     }
@@ -161,90 +208,92 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+
+
+        //Values Reversed from value name since FXML grid is labeled backwards
         puzzleBoxes[0][0] = ZeroZero;
-        puzzleBoxes[0][1] = ZeroOne;
-        puzzleBoxes[0][2] = ZeroTwo ;
-        puzzleBoxes[0][3] = ZeroThree ;
-        puzzleBoxes[0][4] = ZeroFour ;
-        puzzleBoxes[0][5] = ZeroFive ;
-        puzzleBoxes[0][6] = ZeroSix ;
-        puzzleBoxes[0][7] = ZeroSeven ;
-        puzzleBoxes[0][8] = ZeroEight ;
-        puzzleBoxes[1][0] = OneZero ;
+        puzzleBoxes[1][0] = ZeroOne;
+        puzzleBoxes[2][0] = ZeroTwo ;
+        puzzleBoxes[3][0] = ZeroThree ;
+        puzzleBoxes[4][0] = ZeroFour ;
+        puzzleBoxes[5][0] = ZeroFive ;
+        puzzleBoxes[6][0] = ZeroSix ;
+        puzzleBoxes[7][0] = ZeroSeven ;
+        puzzleBoxes[8][0] = ZeroEight ;
+        puzzleBoxes[0][1] = OneZero ;
         puzzleBoxes[1][1] = OneOne ;
-        puzzleBoxes[1][2] = OneTwo ;
-        puzzleBoxes[1][3] = OneThree ;
-        puzzleBoxes[1][4] = OneFour ;
-        puzzleBoxes[1][5] = OneFive ;
-        puzzleBoxes[1][6] = OneSix ;
-        puzzleBoxes[1][7] = OneSeven ;
-        puzzleBoxes[1][8] = OneEight ;
-        puzzleBoxes[2][0] = TwoZero ;
-        puzzleBoxes[2][1] = TwoOne ;
+        puzzleBoxes[2][1] = OneTwo ;
+        puzzleBoxes[3][1] = OneThree ;
+        puzzleBoxes[4][1] = OneFour ;
+        puzzleBoxes[5][1] = OneFive ;
+        puzzleBoxes[6][1] = OneSix ;
+        puzzleBoxes[7][1] = OneSeven ;
+        puzzleBoxes[8][1] = OneEight ;
+        puzzleBoxes[0][2] = TwoZero ;
+        puzzleBoxes[1][2] = TwoOne ;
         puzzleBoxes[2][2] = TwoTwo ;
-        puzzleBoxes[2][3] = TwoThree ;
-        puzzleBoxes[2][4] = TwoFour ;
-        puzzleBoxes[2][5] = TwoFive ;
-        puzzleBoxes[2][6] = TwoSix ;
-        puzzleBoxes[2][7] = TwoSeven ;
-        puzzleBoxes[2][8] = TwoEight ;
-        puzzleBoxes[3][0] = ThreeZero ;
-        puzzleBoxes[3][1] = ThreeOne ;
-        puzzleBoxes[3][2] = ThreeTwo ;
+        puzzleBoxes[3][2] = TwoThree ;
+        puzzleBoxes[4][2] = TwoFour ;
+        puzzleBoxes[5][2] = TwoFive ;
+        puzzleBoxes[6][2] = TwoSix ;
+        puzzleBoxes[7][2] = TwoSeven ;
+        puzzleBoxes[8][2] = TwoEight ;
+        puzzleBoxes[0][3] = ThreeZero ;
+        puzzleBoxes[1][3] = ThreeOne ;
+        puzzleBoxes[2][3] = ThreeTwo ;
         puzzleBoxes[3][3] = ThreeThree ;
-        puzzleBoxes[3][4] = ThreeFour ;
-        puzzleBoxes[3][5] = ThreeFive ;
-        puzzleBoxes[3][6] = ThreeSix ;
-        puzzleBoxes[3][7] = ThreeSeven ;
-        puzzleBoxes[3][8] = ThreeEight ;
-        puzzleBoxes[4][0] = FourZero ;
-        puzzleBoxes[4][1] = FourOne ;
-        puzzleBoxes[4][2] = FourTwo ;
-        puzzleBoxes[4][3] = FourThree ;
+        puzzleBoxes[4][3] = ThreeFour ;
+        puzzleBoxes[5][3] = ThreeFive ;
+        puzzleBoxes[6][3] = ThreeSix ;
+        puzzleBoxes[7][3] = ThreeSeven ;
+        puzzleBoxes[8][3] = ThreeEight ;
+        puzzleBoxes[0][4] = FourZero ;
+        puzzleBoxes[1][4] = FourOne ;
+        puzzleBoxes[2][4] = FourTwo ;
+        puzzleBoxes[3][4] = FourThree ;
         puzzleBoxes[4][4] = FourFour ;
-        puzzleBoxes[4][5] = FourFive ;
-        puzzleBoxes[4][6] = FourSix ;
-        puzzleBoxes[4][7] = FourSeven ;
-        puzzleBoxes[4][8] = FourEight ;
-        puzzleBoxes[5][0] = FiveZero ;
-        puzzleBoxes[5][1] = FiveOne;
-        puzzleBoxes[5][2] = FiveTwo ;
-        puzzleBoxes[5][3] = FiveThree ;
-        puzzleBoxes[5][4] = FiveFour ;
+        puzzleBoxes[5][4] = FourFive ;
+        puzzleBoxes[6][4] = FourSix ;
+        puzzleBoxes[7][4] = FourSeven ;
+        puzzleBoxes[8][4] = FourEight ;
+        puzzleBoxes[0][5] = FiveZero ;
+        puzzleBoxes[1][5] = FiveOne;
+        puzzleBoxes[2][5] = FiveTwo ;
+        puzzleBoxes[3][5] = FiveThree ;
+        puzzleBoxes[4][5] = FiveFour ;
         puzzleBoxes[5][5] = FiveFive ;
-        puzzleBoxes[5][6] = FiveSix ;
-        puzzleBoxes[5][7] = FiveSeven ;
-        puzzleBoxes[5][8] = FiveEight ;
-        puzzleBoxes[6][0] = SixZero ;
-        puzzleBoxes[6][1] = SixOne ;
-        puzzleBoxes[6][2] = SixTwo ;
-        puzzleBoxes[6][3] = SixThree ;
-        puzzleBoxes[6][4] = SixFour ;
-        puzzleBoxes[6][5] = SixFive ;
+        puzzleBoxes[6][5] = FiveSix ;
+        puzzleBoxes[7][5] = FiveSeven ;
+        puzzleBoxes[8][5] = FiveEight ;
+        puzzleBoxes[0][6] = SixZero ;
+        puzzleBoxes[1][6] = SixOne ;
+        puzzleBoxes[2][6] = SixTwo ;
+        puzzleBoxes[3][6] = SixThree ;
+        puzzleBoxes[4][6] = SixFour ;
+        puzzleBoxes[5][6] = SixFive ;
         puzzleBoxes[6][6] = SixSix ;
-        puzzleBoxes[6][7] = SixSeven ;
-        puzzleBoxes[6][8] = SixEight ;
-        puzzleBoxes[7][0] = SevenZero ;
-        puzzleBoxes[7][1] = SevenOne ;
-        puzzleBoxes[7][2] = SevenTwo ;
-        puzzleBoxes[7][3] = SevenThree ;
-        puzzleBoxes[7][4] = SevenFour ;
-        puzzleBoxes[7][5] = SevenFive ;
-        puzzleBoxes[7][6] = SevenSix ;
+        puzzleBoxes[7][6] = SixSeven ;
+        puzzleBoxes[8][6] = SixEight ;
+        puzzleBoxes[0][7] = SevenZero ;
+        puzzleBoxes[1][7] = SevenOne ;
+        puzzleBoxes[2][7] = SevenTwo ;
+        puzzleBoxes[3][7] = SevenThree ;
+        puzzleBoxes[4][7] = SevenFour ;
+        puzzleBoxes[5][7] = SevenFive ;
+        puzzleBoxes[6][7] = SevenSix ;
         puzzleBoxes[7][7] = SevenSeven ;
-        puzzleBoxes[7][8] = SevenEight ;
-        puzzleBoxes[8][0] = EightZero ;
-        puzzleBoxes[8][1] = EightOne ;
-        puzzleBoxes[8][2] = EightTwo ;
-        puzzleBoxes[8][3] = EightThree ;
-        puzzleBoxes[8][4] = EightFour ;
-        puzzleBoxes[8][5] = EightFive ;
-        puzzleBoxes[8][6] = EightSix ;
-        puzzleBoxes[8][7] = EightSeven ;
+        puzzleBoxes[8][7] = SevenEight ;
+        puzzleBoxes[0][8] = EightZero ;
+        puzzleBoxes[1][8] = EightOne ;
+        puzzleBoxes[2][8] = EightTwo ;
+        puzzleBoxes[3][8] = EightThree ;
+        puzzleBoxes[4][8] = EightFour ;
+        puzzleBoxes[5][8] = EightFive ;
+        puzzleBoxes[6][8] = EightSix ;
+        puzzleBoxes[7][8] = EightSeven ;
         puzzleBoxes[8][8] = EightEight ;
 
         ResetBoard();
-
 
         for (int i = 0; i < puzzleBoxes.length; i++) {
             for (int j = 0; j < puzzleBoxes[i].length; j++) {
@@ -252,31 +301,44 @@ public class Controller implements Initializable {
 
                 final int r = i;
                 final int c = j;
-                puzzleBoxes[i][j].textProperty().addListener(new ChangeListener<String>() {
 
+                puzzleBoxes[i][j].textProperty().addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
 
-                        BoardChecker boardChecker = new BoardChecker(puzzle);
 
+                        System.out.println("Oldvalue: " + oldValue);
+                        System.out.println("newValue: " + newValue);
 
                         if (!newValue.matches("\\d*")) {
+                            //puzzleBoxes[r][c].textProperty().removeListener(this);
                             puzzleBoxes[r][c].setText(newValue.replaceAll("[^\\d]", ""));
-                        } else if (newValue.equals("")) {
-                            System.out.println("Empty");
-                        } else if (newValue.length() > 1 || Integer.parseInt(newValue) == 0) {
-                            puzzleBoxes[r][c].setText(newValue.replace(newValue, oldValue));
-                            System.out.println("Call");
-                        } else if (!boardChecker.isPossibleDigit(Integer.parseInt(newValue), 0, 0)) {
-                            System.out.println("Not Possible Value");
-                        } else {
-                            puzzle[r][c] = Integer.parseInt(puzzleBoxes[r][c].getText());
-                            System.out.println(puzzle[r][c]);
+                            //puzzleBoxes[r][c].textProperty().addListener(this);
                         }
+                        else if (newValue.equals("")) {
+                            //puzzle[r][c] = 0;
+                            System.out.println("Empty");
+                            setNotPossibleValue(false);
+                        }
+                        else if (newValue.length() > 1 || Integer.parseInt(newValue) == 0) {
+                            puzzleBoxes[r][c].textProperty().removeListener(this);
+                            puzzleBoxes[r][c].setText(oldValue);
+                            System.out.println("Text Greater than 1 or Zero");
+                            puzzleBoxes[r][c].textProperty().addListener(this);
+                        }
+                        else {
+                            puzzle[r][c] = Integer.parseInt(puzzleBoxes[r][c].getText());
+                            //puzzleBoxes[r+1][c].requestFocus(); TODO: ADD THIS WITH FUCTIONALITY
+                            System.out.println("Value added to Puzzle " + puzzle[r][c]);
+                            SudokuSolver solver = new SudokuSolver(puzzle);
+                            solver.showPuzzle();
+                        }
+
+
+
                     }
                 });
-
 
             }
         }
