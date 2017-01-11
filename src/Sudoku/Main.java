@@ -8,9 +8,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+
+    public static Stage primaryStage;
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("MenuWindow.fxml"));
+        Main.primaryStage = primaryStage;
+        Parent root = FXMLLoader.load(getClass().getResource("StyleSheets/MenuWindow.fxml"));
         primaryStage.setTitle("Sudoku Solver");
         primaryStage.setScene(new Scene(root));
         primaryStage.setResizable(false);
@@ -25,12 +30,12 @@ public class Main extends Application {
 
     @Override
     public void init() {
-        System.out.println("Init");
+        System.out.println("[log]: Init");
     }
 
     @Override
     public void stop() {
-        System.out.println("Stage is closing");
+        System.out.println("[Log]: Stage is closing");
 
     }
 

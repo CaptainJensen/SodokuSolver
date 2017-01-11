@@ -15,18 +15,6 @@ public class SudokuSolver {
     //constructor
     public SudokuSolver(int[][] values) {
         numbers = values;
-
-
-
-//        numbers =  new int[9][9];
-        //int[][] vals = new int[9][9];
-//        Scanner read = new Scanner(new File(filePath));
-//        for (int r = 0; r < numbers.length; r++) {
-//            for (int c = 0; c < numbers[r].length; c++) {
-//                numbers[r][c] = read.nextInt();
-//            }
-//        }
-
     }
 
 

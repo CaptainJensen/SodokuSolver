@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.*?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: #AC5B14;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Sudoku.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" styleClass="background" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Sudoku.Controller">
    <children>
       <GridPane fx:id="gridPane" gridLinesVisible="true" layoutX="75.0" layoutY="75.0" prefHeight="450.0" prefWidth="450.0">
         <columnConstraints>
@@ -437,13 +437,39 @@
             </TextField>
          </children>
       </GridPane>
+      <MenuBar fx:id="menuBar" prefHeight="29.0" prefWidth="600.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#solveAction" text="Solve" />
+                  <MenuItem mnemonicParsing="false" onAction="#ClearBoard" text="Clear" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#closeWindow" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Puzzle">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#generateEasy" text="Easy" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateInt" text="Intermediate" />
+                  <MenuItem mnemonicParsing="false" onAction="#generateHard" text="Hard" />
+            </items>
+          </Menu>
+            <Menu mnemonicParsing="false" text="Preferences" />
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+                  <MenuItem mnemonicParsing="false" onAction="#openHelp" text="Sudoku Solver Help" />
+              <MenuItem mnemonicParsing="false" onAction="#openAbout" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
       <Button fx:id="solveButton" layoutX="238.0" layoutY="546.0" mnemonicParsing="false" onAction="#solveAction" prefHeight="40.0" prefWidth="124.0" text="Solve" textFill="#c35e00">
          <font>
             <Font size="19.0" />
          </font>
       </Button>
-      <Text fill="#868484" layoutX="477.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jensen - 2017.1.5" />
-      <Button layoutX="390.0" layoutY="551.0" mnemonicParsing="false" onAction="#ClearBoard" prefHeight="30.0" prefWidth="76.0" text="Clear" textFill="#8a0202" />
+      <Text fill="#868484" layoutX="477.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jensen - 2017.1.5" />
+      <Button layoutX="373.0" layoutY="551.0" mnemonicParsing="false" onAction="#ClearBoard" prefHeight="31.0" prefWidth="90.0" text="Clear" textFill="#8a0202" />
       <Line endX="400.0" layoutX="125.0" layoutY="375.0" scaleY="5.0" startX="-50.0" />
       <Line endX="400.0" layoutX="125.0" layoutY="225.0" scaleY="5.0" startX="-50.0" />
       <Line endX="400.0" layoutX="50.0" layoutY="300.0" rotate="90.0" scaleY="5.0" startX="-50.0" />

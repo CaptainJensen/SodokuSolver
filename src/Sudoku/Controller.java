@@ -1,10 +1,12 @@
 package Sudoku;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
@@ -22,6 +24,7 @@ public class Controller implements Initializable {
 
     public GridPane gridPane;
     public Button solveButton;
+    public MenuBar menuBar;
 
     public TextField SevenTwo;
     public TextField OneZero;
@@ -105,9 +108,6 @@ public class Controller implements Initializable {
     public TextField OneTwo;
     public TextField ZeroOne;
 
-
-
-
     private void setNotPossibleValue(boolean value) {
         if(value) {
             solveButton.setDisable(true);
@@ -119,12 +119,13 @@ public class Controller implements Initializable {
 
     public void solveAction(ActionEvent actionEvent) {
 
-        System.out.println("Solve Button Pressed");
+        System.out.println("[Log]: Solve Button Pressed");
 
         BoardChecker boardChecker = new BoardChecker(puzzle);
         if (!boardChecker.isBoardPossible()) {
-            System.out.println("Not Possible Value");
+            System.out.println("[Puzzle]: Not Possible Value");
             setNotPossibleValue(true);
+            //TODO: add user notice to highlight value with error.
 
         } else {
 
@@ -150,11 +151,10 @@ public class Controller implements Initializable {
 
     //clears the board from Button action
     public void ClearBoard(ActionEvent actionEvent) {
-        System.out.println("Board Reset From Button");
+        System.out.println("[Log]: Board Reset From Button");
         setNotPossibleValue(false);
         ResetBoard();
     }
-
 
     //resets the board
     private void ResetBoard() {
@@ -167,6 +167,73 @@ public class Controller implements Initializable {
         }
     }
 
+    //closes the window
+    public void closeWindow(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+
+    /**
+     * Puzzle Section
+     */
+    public void generateEasy(ActionEvent actionEvent) {
+        ResetBoard();
+        Generator generator = new Generator();
+        generator.nextBoard(1);
+        puzzle = generator.getBoard();
+        setBoardValues();
+    }
+
+    public void generateInt(ActionEvent actionEvent) {
+        ResetBoard();
+        Generator generator = new Generator();
+        generator.nextBoard(2);
+        puzzle = generator.getBoard();
+        setBoardValues();
+    }
+
+    public void generateHard(ActionEvent actionEvent) {
+        ResetBoard();
+        Generator generator = new Generator();
+        generator.nextBoard(3);
+        puzzle = generator.getBoard();
+        setBoardValues();
+    }
+
+
+
+    /**
+     * Help Section
+     */
+    public void openHelp(ActionEvent actionEvent) {
+
+//        Windows windows = new Windows();
+//        windows.openWindow("StyleSheets/SolverHelp", "Help" , true);
+
+        //TODO: create help page
+    }
+
+    public void openAbout(ActionEvent actionEvent) {
+        Windows windows = new Windows();
+        windows.openWindow("StyleSheets/About", "About" , true);
+    }
+
+
+
+    /**
+     * Preferences Section
+     */
+    public void darkToggleAction(ActionEvent actionEvent) {
+
+        //TODO: add toggle
+
+    }
+
+    public void tealToggleAction(ActionEvent actionEvent) {
+
+        //TODO: add toggle
+
+    }
 
 
     /**
@@ -266,6 +333,12 @@ public class Controller implements Initializable {
         puzzleBoxes[8][8] = EightEight ;
 
         ResetBoard();
+
+        final String os = System.getProperty ("os.name");
+        if (os != null && os.startsWith ("Mac")) {
+           // menuBar.useSystemMenuBarProperty().set(true);
+        }
+
         for (int i = 0; i < puzzleBoxes.length; i++) {
             for (int j = 0; j < puzzleBoxes[i].length; j++) {
 
@@ -279,8 +352,8 @@ public class Controller implements Initializable {
 
 
 
-                        System.out.println("Oldvalue: " + oldValue);
-                        System.out.println("newValue: " + newValue);
+                        System.out.println("[Puzzle]: Oldvalue: " + oldValue);
+                        System.out.println("[Puzzle]: newValue: " + newValue);
 
                         if (!newValue.matches("\\d*")) {
                             //puzzleBoxes[r][c].textProperty().removeListener(this);
@@ -289,19 +362,19 @@ public class Controller implements Initializable {
                         }
                         else if (newValue.equals("")) {
                             puzzle[r][c] = 0;
-                            System.out.println("Empty");
+                            System.out.println("[Puzzle]: Empty");
                             setNotPossibleValue(false);
                         }
                         else if (newValue.length() > 1 || Integer.parseInt(newValue) == 0) {
                             puzzleBoxes[r][c].textProperty().removeListener(this);
                             puzzleBoxes[r][c].setText(oldValue);
-                            System.out.println("Text Greater than 1 or Zero");
+                            System.out.println("[Puzzle]: Text Greater than 1 or Zero");
                             puzzleBoxes[r][c].textProperty().addListener(this);
                         }
                         else {
                             puzzle[r][c] = Integer.parseInt(puzzleBoxes[r][c].getText());
                             //puzzleBoxes[r+1][c].requestFocus(); TODO: ADD THIS WITH FUCTIONALITY
-                            System.out.println("Value added to Puzzle " + puzzle[r][c]);
+                            System.out.println("[Puzzle]: Value added to Puzzle " + puzzle[r][c]);
                             SudokuSolver solver = new SudokuSolver(puzzle);
                             solver.showPuzzle();
                         }
@@ -317,4 +390,5 @@ public class Controller implements Initializable {
 
 
     }
+
 }
