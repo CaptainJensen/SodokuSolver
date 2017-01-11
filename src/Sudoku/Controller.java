@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ public class Controller implements Initializable {
     public GridPane gridPane;
     public Button solveButton;
     public MenuBar menuBar;
+    public Text errorText;
 
     public TextField SevenTwo;
     public TextField OneZero;
@@ -108,12 +110,15 @@ public class Controller implements Initializable {
     public TextField OneTwo;
     public TextField ZeroOne;
 
+
     private void setNotPossibleValue(boolean value) {
         if(value) {
             solveButton.setDisable(true);
+            errorText.setVisible(true);
         }
         else {
             solveButton.setDisable(false);
+            errorText.setVisible(false);
         }
     }
 
@@ -347,11 +352,11 @@ public class Controller implements Initializable {
         for (int i = 0; i < puzzleBoxes.length; i++) {
             for (int j = 0; j < puzzleBoxes[i].length; j++) {
 
-
                 final int r = i;
                 final int c = j;
 
                 puzzleBoxes[i][j].textProperty().addListener(new ChangeListener<String>() {
+
                     @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 
@@ -367,7 +372,6 @@ public class Controller implements Initializable {
                         }
                         else if (newValue.equals("")) {
                             puzzle[r][c] = 0;
-                            puzzleBoxes[r][c].setStyle("-fx-background-color: null;");
                             System.out.println("[Puzzle]: Empty");
                             setNotPossibleValue(false);
                         }

@@ -468,7 +468,10 @@
             <Font size="19.0" />
          </font>
       </Button>
-      <Text fill="#868484" layoutX="477.0" layoutY="586.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Jensen - 2017.1.5" />
+      <Text fx:id="errorText" fill="RED" layoutX="217.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Error in Puzzle" textAlignment="CENTER" visible="false" wrappingWidth="166.99999797344208">
+         <font>
+            <Font name="Avenir Black" size="23.0" />
+         </font></Text>
       <Button layoutX="373.0" layoutY="551.0" mnemonicParsing="false" onAction="#ClearBoard" prefHeight="31.0" prefWidth="90.0" text="Clear" textFill="#8a0202" />
       <Line endX="400.0" layoutX="125.0" layoutY="375.0" scaleY="5.0" startX="-50.0" />
       <Line endX="400.0" layoutX="125.0" layoutY="225.0" scaleY="5.0" startX="-50.0" />
