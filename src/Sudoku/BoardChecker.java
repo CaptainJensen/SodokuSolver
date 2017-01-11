@@ -6,6 +6,8 @@ package Sudoku;
 public class BoardChecker {
 
     private int[][] board;
+    private int errorR;
+    private int errorC;
 
     public BoardChecker(int[][] values) {
 
@@ -13,32 +15,40 @@ public class BoardChecker {
 
     }
 
+
     //checks every value in the board
     public boolean isBoardPossible() {
         if (board == null) return false;
 
         // check each colmn
-        for (int i = 0; i < 9; i++) {
+        for (int r = 0; r < 9; r++) {
             boolean[] m = new boolean[9];
-            for (int j = 0; j < 9; j++) {
-                if (board[i][j] != 0) {
-                    if (m[(board[i][j] - 1)]) {
+            for (int c = 0; c < 9; c++) {
+                if (board[c][r] != 0) {
+                    if (m[(board[c][r] - 1)]) {
+                        //r and c are fliped
+                        System.out.println("[Puzzle]: Error in colunm at: r=" + c + " c=" + r);
+                        errorR = c;
+                        errorC = r;
                         return false;
                     }
-                    m[(board[i][j] - 1)] = true;
+                    m[(board[c][r] - 1)] = true;
                 }
             }
         }
 
         //check each row
-        for (int j = 0; j < 9; j++) {
+        for (int r = 0; r < 9; r++) {
             boolean[] m = new boolean[9];
-            for (int i = 0; i < 9; i++) {
-                if (board[i][j] != 0) {
-                    if (m[(board[i][j] - 1)]) {
+            for (int c = 0; c < 9; c++) {
+                if (board[r][c] != 0) {
+                    if (m[(board[r][c] - 1)]) {
+                        System.out.println("[Puzzle]: Error in row at: r=" + r + " c=" + c);
+                        errorR = r;
+                        errorC = c;
                         return false;
                     }
-                    m[(board[i][j] - 1)] = true;
+                    m[(board[r][c] - 1)] = true;
                 }
             }
         }
@@ -50,6 +60,9 @@ public class BoardChecker {
                 for (int c = square % 3 * 3; c < square % 3 * 3 + 3; c++) {
                     if (board[r][c] != 0) {
                         if (x[(board[r][c] - 1)]) {
+                            System.out.println("[Puzzle]: Error in square at: r=" + r + " c=" + c);
+                            errorR = r;
+                            errorC = c;
                             return false;
                         }
                         x[(board[r][c] - 1)] = true;
@@ -125,5 +138,13 @@ public class BoardChecker {
 
     public void setBoard(int[][] board) {
         this.board = board;
+    }
+
+    public int getErrorR() {
+        return errorR;
+    }
+
+    public int getErrorC() {
+        return errorC;
     }
 }

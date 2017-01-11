@@ -124,8 +124,10 @@ public class Controller implements Initializable {
         BoardChecker boardChecker = new BoardChecker(puzzle);
         if (!boardChecker.isBoardPossible()) {
             System.out.println("[Puzzle]: Not Possible Value");
+            puzzleBoxes[boardChecker.getErrorR()][boardChecker.getErrorC()].setStyle("-fx-background-color: RED;");
+            //puzzleBoxes[boardChecker.getErrorR()][boardChecker.getErrorC()].requestFocus();
+            //TODO: make text above show error
             setNotPossibleValue(true);
-            //TODO: add user notice to highlight value with error.
 
         } else {
 
@@ -160,11 +162,14 @@ public class Controller implements Initializable {
     private void ResetBoard() {
         for (int r = 0; r < puzzleBoxes.length; r++) {
             for (int c = 0; c < puzzleBoxes[r].length; c++) {
+                puzzleBoxes[r][c].setStyle("-fx-background-color: null;");
                 puzzleBoxes[r][c].setText("");
                 puzzle = new int[9][9];
 
             }
         }
+
+        //TODO: also reset text to ""
     }
 
     //closes the window
@@ -362,6 +367,7 @@ public class Controller implements Initializable {
                         }
                         else if (newValue.equals("")) {
                             puzzle[r][c] = 0;
+                            puzzleBoxes[r][c].setStyle("-fx-background-color: null;");
                             System.out.println("[Puzzle]: Empty");
                             setNotPossibleValue(false);
                         }
